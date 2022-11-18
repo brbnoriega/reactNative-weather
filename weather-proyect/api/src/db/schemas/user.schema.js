@@ -11,23 +11,23 @@ export const userSchema = new Schema({
 
   lastname: { type: String, trim: true, require: true, default: "" },
 
-  nickname: { type: String, trim: true, require: true, default: "" },
+  nickname: { type: String, trim: true, require: false, default: "" },
 
-  isAdmin: { type: Boolean, require: true, default: false },
+  isAdmin: { type: Boolean, require: false, default: false },
 
-  email: { type: String, trim: true, require: true, unique: true },
+  mail: { type: String, trim: true, require: true, unique: true },
 
   password: { type: String, require: true },
 
   city: [
     {
-      city: { type: String },
+      city: { type: String, require: false }, 
     },
   ],
 
   favourites: [
     {
-      city: { type: String },
+      city: { type: String,  require: false },
     },
   ],
   image: {
