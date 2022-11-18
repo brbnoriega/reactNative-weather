@@ -1,8 +1,10 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const connect = require("./src/db/db");
 const server = express();
 require("dotenv").config();
-
+const { PORT } = process.env;
 // server.get("/", (req, res) => {
 //   res.send("Hello world!");
 // });
@@ -25,8 +27,8 @@ const startServer = async () => {
 };
 startServer();
 
-server.listen(process.env.PORT, () => {
-  console.log(`Server listening: PORT ${process.env.PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server listening: PORT ${PORT}`);
 });
 
 module.exports = server;
