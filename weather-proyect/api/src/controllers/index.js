@@ -1,6 +1,3 @@
-const { Router } = require("express");
-const router = Router();
-
 // f que trae todos los users
 const getUsers = async (req, res) => {
   const name = req.query.name;
@@ -9,13 +6,10 @@ const getUsers = async (req, res) => {
   if (name) {
     let userName = await usersTotal.filter((u) =>
       u.name.toLowerCase().includes(name.toLowerCase())
-    ); 
-    console.log('entre')
-    userName.length
-      ? res.status(200).send(userName)
-    
-      : res.status(404).send("User not found");
-      console.log('estoy al final del 404')
+    );
+    console.log("entre");
+    userName.length ? res.status(200).send(userName) : res.status(404).send("User not found");
+    console.log("estoy al final del 404");
   } else {
     res.status(200).send(usersTotal);
   }
@@ -58,20 +52,20 @@ const getUsersPost = async (req, res) => {
 };
 
 const userEdit = async (req, res) => {
-    const { id } = req.params;
-    const { name, lastname, mail, password, nickname } = req.body;
-    try {
-      await user.where({_id: id}).update({
-        name,
-        lastname,
-        mail,
-        password,
-        nickname
-      })
-      res.send("Excelent Edit!");
-    } catch (error) {
-      console.log(error);
-    }
+  const { id } = req.params;
+  const { name, lastname, mail, password, nickname } = req.body;
+  try {
+    await user.where({ _id: id }).update({
+      name,
+      lastname,
+      mail,
+      password,
+      nickname,
+    });
+    res.send("Excelent Edit!");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getAllUsers = async () => {

@@ -1,12 +1,8 @@
-
-
 const express = require("express");
-const router = express.Router()
-const useRoute = require('./userRoute')
+const router = express.Router();
+const useRoute = require("./userRoute");
 
-
-
-router.use(useRoute)
-console.log('mama miaa')
+router.use(useRoute);
+console.log("mama miaa");
 
 module.exports = router;
