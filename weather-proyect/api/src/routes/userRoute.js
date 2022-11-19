@@ -1,7 +1,9 @@
-import { Router } from "express";
-import { userSchema } from "../db/schemas/user.schema";
-import { getUsers, getUsersId, getUsersPost, userEdit } from "../controllers";
-const router = Router();
+import { getUsers, getUsersId, getUsersPost, userEdit } from "../controllers/index";
+const express = require("express");
+const router = express.Router();
+
+
+
 
 router.get("/user", getUsers);
 router.get("/user/id", getUsersId);

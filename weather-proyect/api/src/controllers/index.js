@@ -9,10 +9,13 @@ const getUsers = async (req, res) => {
   if (name) {
     let userName = await usersTotal.filter((u) =>
       u.name.toLowerCase().includes(name.toLowerCase())
-    );
+    ); 
+    console.log('entre')
     userName.length
       ? res.status(200).send(userName)
+    
       : res.status(404).send("User not found");
+      console.log('estoy al final del 404')
   } else {
     res.status(200).send(usersTotal);
   }

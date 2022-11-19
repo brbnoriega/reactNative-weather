@@ -1,21 +1,12 @@
-import { Router } from "express";
-import { userSchema } from "../db/schemas/user.schema";
-const router = Router();
 
-router.get("/", async (req, res) => {
-  try {
-    const modelUser = await userSchema.find();
-    console.log(modelUser);
 
-    res.render("userSchema", {
-      modelUser: modelUser,
-      // modelUser: [
-      //   {name: 'pepito', lastname: 'del sur', nickname: 'pepe', isAdmin: '', email: 'pepe@gmail.com', password: "1234", city:['Arg', 'Dubai'], favourites: ['Uruguay', 'EE.UU'], image:'', disable:'' }
-      // ]
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
+const express = require("express");
+const router = express.Router()
+const useRoute = require('./userRoute')
 
-export default router;
+
+
+router.use(useRoute)
+console.log('mama miaa')
+
+module.exports = router;
