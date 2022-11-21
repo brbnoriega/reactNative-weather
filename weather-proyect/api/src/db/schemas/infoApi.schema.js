@@ -1,11 +1,12 @@
 const { Schema } = require("mongoose");
+const mongoose = require("mongoose");
 
-export const infoApiSchema = new Schema({
-  personInCharge: {
-    type: String,
-    trim: true,
-    default: "",
-  },
+const infoApiSchema = new Schema({
+  // personInCharge: {
+  //   type: String,
+  //   trim: true,
+  //   default: "",
+  // },
 
   lat: { type: Number, default: "" },
 
@@ -124,4 +125,4 @@ export const infoApiSchema = new Schema({
   ],
 });
 
-module.exports = placeSchema;
+module.exports = Info = mongoose.model("info", infoApiSchema);

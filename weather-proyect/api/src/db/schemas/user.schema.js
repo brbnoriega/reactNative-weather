@@ -1,11 +1,12 @@
 const { Schema } = require("mongoose");
+const mongoose = require("mongoose");
 
-export const userSchema = new Schema({
-  personInCharge: {
-    type: String,
-    trim: true,
-    default: "",
-  },
+const userSchema = new Schema({
+  // personInCharge: {
+  //   type: String,
+  //   trim: true,
+  //   default: "",
+  // },
 
   name: { type: String, trim: true, require: true, default: "" },
 
@@ -21,13 +22,13 @@ export const userSchema = new Schema({
 
   city: [
     {
-      city: { type: String, require: false }, 
+      city: { type: String, require: false },
     },
   ],
 
   favourites: [
     {
-      city: { type: String,  require: false },
+      city: { type: String, require: false },
     },
   ],
   image: {
@@ -39,4 +40,4 @@ export const userSchema = new Schema({
   disabled: { type: Boolean, default: false },
 });
 
-module.exports = placeSchema;
+module.exports = User = mongoose.model("user", userSchema);

@@ -1,3 +1,5 @@
+const User = require("../db/schemas/user.schema");
+
 // f que trae todos los users
 const getUsers = async (req, res) => {
   const name = req.query.name;
@@ -29,20 +31,20 @@ const getUsersId = async (req, res) => {
 const getUsersPost = async (req, res) => {
   const { name, lastname, mail, password } = req.body;
 
-  const findUser = await user.findOne({ mail: mail });
+  const findUser = await User.findOne({ mail: mail });
   if (findUser && findUser.password !== password)
     return res.send({ log: false, mensage: "Password Incorrect!" });
 
   if (findUser) {
-    let mailId = await user.findOne({ id: findUser.id });
+    let mailId = await User.findOne({ id: findUser.id });
     res.send({
       log: true,
       mensage: "Suceffuly Login!",
       userInfo: [mailId, findUser],
     });
   } else {
-    let userCreated = await user.create({ name, lastname, password, mail });
-    let matcheo = await user.findOne({ name: name });
+    let userCreated = await User.create({ name, lastname, password, mail });
+    let matcheo = await User.findOne({ name: name });
     res.send({
       log: true,
       mensage: "Login Suceffuly",
@@ -55,7 +57,7 @@ const userEdit = async (req, res) => {
   const { id } = req.params;
   const { name, lastname, mail, password, nickname } = req.body;
   try {
-    await user.where({ _id: id }).update({
+    await User.where({ _id: id }).update({
       name,
       lastname,
       mail,
@@ -69,11 +71,11 @@ const userEdit = async (req, res) => {
 };
 
 const getAllUsers = async () => {
-  return await user.findOne({});
+  return await User.findOne({});
 };
 
 const getOneId = async (id) => {
-  return await user.findById(id);
+  return await User.findById(id);
 };
 
 module.exports = { getUsers, getUsersId, getUsersPost, userEdit };

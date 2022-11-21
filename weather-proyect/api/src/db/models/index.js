@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
-const router = express.Router;
-import userSchema from "../schemas/user.schema";
-import infoApiSchema from "../schemas/infoApi.schema";
+// const mongoose = require("mongoose");
+// const userSchema = require("../schemas/user.schema");
+// const infoApiSchema = require("../schemas/infoApi.schema");
 
-export const user = mongoose.model("user", userSchema);
-export const info = mongoose.model("info", infoApiSchema);
+// const user = mongoose.model("user", userSchema);
+// const info = mongoose.model("info", infoApiSchema);
+
+// module.exports = { user, info };
