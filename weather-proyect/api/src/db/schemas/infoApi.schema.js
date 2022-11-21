@@ -7,122 +7,67 @@ const infoApiSchema = new Schema({
   //   trim: true,
   //   default: "",
   // },
+  coord: {
+    lon: { type: Number, default: "", trim: true },
 
-  lat: { type: Number, default: "" },
-
-  lon: { type: Number, default: "" },
-
-  timezone: { type: String, default: "" },
-
-  timezone_offset: { type: Number, default: "" },
-
-  current: {
-    dt: { type: Number, trim: true, require: false },
-    sunrise: { type: Number, trim: true, require: false },
-    sunset: { type: Number, trim: true, require: false },
-    temp: { type: Number, trim: true, require: false },
-    feels_like: { type: Number, trim: true, require: false },
-    pressure: { type: Number, trim: true, require: false },
-    humidity: { type: Number, trim: true, require: false },
-    dew_point: { type: Number, trim: true, require: false },
-    uvi: { type: Number, trim: true, require: false },
-    clouds: { type: Number, trim: true, require: false },
-    visibility: { type: Number, trim: true, require: false },
-    wind_speed: { type: Number, trim: true, require: false },
-    wind_deg: { type: Number, trim: true, require: false },
-    wind_gust: { type: Number, trim: true, require: false },
-    weather: [
-      {
-        id: { type: Number, trim: true, require: false },
-        main: { type: String, trim: true, require: false },
-        description: { type: String, trim: true, require: false },
-        icon: { type: String, trim: true, require: false },
-      },
-    ],
+    lat: { type: Number, default: "", trim: true },
   },
 
-  minutely: [
+  weather: [
     {
-      dt: { type: Number, trim: true, require: false },
-      precipitation: { type: Number, trim: true, require: false },
+      id: { type: Number, default: "", trim: true },
+      main: { type: String, default: "", trim: true },
+      description: { type: String, default: "", trim: true },
+      icon: { type: String, default: "", trim: true },
     },
   ],
 
-  hourly: [
-    {
-      dt: { type: Number, trim: true, require: false },
-      temp: { type: Number, trim: true, require: false },
-      feels_like: { type: Number, trim: true, require: false },
-      pressure: { type: Number, trim: true, require: false },
-      dew_point: { type: Number, trim: true, require: false },
-      uvi: { type: Number, trim: true, require: false },
-      clouds: { type: Number, trim: true, require: false },
-      visibility: { type: Number, trim: true, require: false },
-      wind_speed: { type: Number, trim: true, require: false },
-      wind_deg: { type: Number, trim: true, require: false },
-      wind_gust: { type: Number, trim: true, require: false },
-      weather: [
-        {
-          id: { type: Number, trim: true, require: false },
-          main: { type: String, trim: true, require: false },
-          description: { type: String, trim: true, require: false },
-          icon: { type: String, trim: true, require: false },
-        },
-      ],
-      pop: { type: Number, trim: true, require: false },
-    },
-  ],
+  base: { type: String, default: "", trim: true },
 
-  daily: [
-    {
-      dt: { type: Number, trim: true, require: false },
-      sunrise: { type: Number, trim: true, require: false },
-      sunset: { type: Number, trim: true, require: false },
-      moonrise: { type: Number, trim: true, require: false },
-      moonset: { type: Number, trim: true, require: false },
-      moon_phase: { type: Number, trim: true, require: false },
-      temp: {
-        day: { type: Number, trim: true, require: false },
-        min: { type: Number, trim: true, require: false },
-        max: { type: Number, trim: true, require: false },
-        night: { type: Number, trim: true, require: false },
-        eve: { type: Number, trim: true, require: false },
-        morn: { type: Number, trim: true, require: false },
-      },
-      feels_like: {
-        day: { type: Number, trim: true, require: false },
-        night: { type: Number, trim: true, require: false },
-        eve: { type: Number, trim: true, require: false },
-        morn: { type: Number, trim: true, require: false },
-      },
-      pressure: { type: Number, trim: true, require: false },
-      humidity: { type: Number, trim: true, require: false },
-      dew_point: { type: Number, trim: true, require: false },
-      wind_speed: { type: Number, trim: true, require: false },
-      wind_deg: { type: Number, trim: true, require: false },
-      wind_gust: { type: Number, trim: true, require: false },
-      weather: [
-        {
-          id: { type: Number, trim: true, require: false },
-          main: { type: String, trim: true, require: false },
-          description: { type: String, trim: true, require: false },
-          icon: { type: String, trim: true, require: false },
-        },
-      ],
-      clouds: { type: Number, trim: true, require: false },
-      pop: { type: Number, trim: true, require: false },
-      uvi: { type: Number, trim: true, require: false },
-    },
-  ],
+  main: {
+    temp: { type: Number, default: "", trim: true },
+    feels_like: { type: Number, default: "", trim: true },
+    temp_min: { type: Number, default: "", trim: true },
+    temp_max: { type: Number, default: "", trim: true },
+    pressure: { type: Number, default: "", trim: true },
+    humidity: { type: Number, default: "", trim: true },
+    sea_level: { type: Number, default: "", trim: true },
+    grnd_level: { type: Number, default: "", trim: true },
+  },
 
-  alerts: [
-    {
-      sender_name: { type: String, trim: true, require: false },
-      event: { type: String, trim: true, require: false },
-      start: { type: Number, trim: true, require: false },
-      description: { type: String, trim: true, require: false },
-    },
-  ],
+  visibility: { type: Number, default: "", trim: true },
+
+  wind: {
+    speed: { type: Number, default: "", trim: true },
+    deg: { type: Number, default: "", trim: true },
+    gust: { type: Number, default: "", trim: true },
+  },
+
+  rain: {
+    "1h": { type: Number, default: "", trim: true },
+  },
+
+  clouds: {
+    all: { type: Number, default: "", trim: true },
+  },
+
+  dt: { type: Number, default: "", trim: true },
+
+  sys: {
+    type: { type: Number, default: "", trim: true },
+    id: { type: Number, default: "", trim: true },
+    country: { type: String, default: "", trim: true },
+    sunrise: { type: Number, default: "", trim: true },
+    sunset: { type: Number, default: "", trim: true },
+  },
+
+  timezone: { type: Number, default: "", trim: true },
+
+  id: { type: Number, default: "", trim: true, require: true },
+
+  name: { type: String, default: "", trim: true, require: true },
+
+  cod: { type: Number, default: "", trim: true },
 });
 
 module.exports = Info = mongoose.model("info", infoApiSchema);

@@ -1,4 +1,5 @@
 const User = require("../db/schemas/user.schema");
+const Info = require("../db/schemas/infoApi.schema");
 
 // f que trae todos los users
 const getUsers = async (req, res) => {
@@ -70,12 +71,45 @@ const userEdit = async (req, res) => {
   }
 };
 
+/* *********** Favoritos ************ */
+const favAll = async (req, res) => {};
+
+/* *********** Citys ************ */
+const citiesAll = async (req, res) => {
+  const { name } = req.params;
+  const { city } = req.query;
+  const citiesAll = await getAllCities();
+
+  try {
+    if (city && name) {
+      let cityResponse = await User.findOne({ name }, { city: city });
+      //const cityName = citiesAll.filter((c) => {
+      //  c.name.toLowerCase().includes(city.toLowerCase());
+      //});
+      cityResponse.length
+        ? res.status(200).send("Todo OK, Beautiful", cityResponse)
+        : res.status(404).send("City not found");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/* *********** Funciones ************ */
 const getAllUsers = async () => {
-  return await User.findOne({});
+  return await User.find({});
 };
 
 const getOneId = async (id) => {
   return await User.findById(id);
 };
 
-module.exports = { getUsers, getUsersId, getUsersPost, userEdit };
+const getAllCities = async () => {
+  return await Info.find({});
+};
+
+const getCitiesID = async (id) => {
+  return await Info.findById(id);
+};
+
+module.exports = { getUsers, getUsersId, getUsersPost, userEdit, citiesAll };
