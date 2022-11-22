@@ -9,7 +9,6 @@ const infoApiSchema = new Schema({
   // },
   coord: {
     lon: { type: Number, default: "", trim: true },
-
     lat: { type: Number, default: "", trim: true },
   },
 

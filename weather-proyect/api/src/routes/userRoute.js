@@ -12,6 +12,7 @@ router.get("/user/fav/id");
 router.put("/user/fav/id");
 router.put("/user/removeFav/id");
 
+//Se podria unificar fav y cities
 router.get("/user/cities", citiesAll);
 router.get("/user/cities/id");
 router.put("/user/editCities/id");
