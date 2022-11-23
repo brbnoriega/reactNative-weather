@@ -22,7 +22,7 @@ const userSchema = new Schema({
 
   city: [
     {
-      city: { type: String, require: false },
+      name: { type: String, require: false },
     },
   ],
 

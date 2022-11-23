@@ -1,6 +1,24 @@
 const User = require("../db/schemas/user.schema");
 const Info = require("../db/schemas/infoApi.schema");
 
+
+
+//f que trae los users por id 1--user 1--id
+const getUsersId = async (req, res) => {
+  const {id} = req.params;
+
+  try{
+  if(id){
+    const idUser = await User.find({_id: id})
+    console.log(idUser)
+    res.status(200).send(idUser)
+  }
+ 
+  }catch(error){
+  console.log(error)
+  }
+};
+
 // f que trae todos los users
 const getUsers = async (req, res) => {
   const name = req.query.name;
@@ -15,17 +33,6 @@ const getUsers = async (req, res) => {
     console.log("estoy al final del 404");
   } else {
     res.status(200).send(usersTotal);
-  }
-};
-
-//f que trae los users por id 1--user 1--id
-const getUsersId = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const oneUser = await getOneId(id);
-    res.status(200).json(oneUser);
-  } catch (error) {
-    res.status(404).send(error.message);
   }
 };
 
@@ -76,23 +83,44 @@ const favAll = async (req, res) => {};
 
 /* *********** Citys ************ */
 const citiesAll = async (req, res) => {
-  const { name } = req.params;
-  const { city } = req.query;
-  const citiesAll = await getAllCities();
+ 
+//user---->id = usuario 
+const {id} = req.params;
 
-  try {
-    if (city && name) {
-      let cityResponse = await User.findOne({ name }, { city: city });
-      //const cityName = citiesAll.filter((c) => {
-      //  c.name.toLowerCase().includes(city.toLowerCase());
-      //});
-      cityResponse.length
-        ? res.status(200).send("Todo OK, Beautiful", cityResponse)
-        : res.status(404).send("City not found");
-    }
-  } catch (error) {
-    console.log(error);
-  }
+try{
+if(id){
+  const idUser = await User.find({_id: id})
+  console.log(idUser)
+  res.status(200).send(idUser)
+}
+
+}catch(error){
+console.log(error)
+}
+
+//usuario--->buscar city y traer su array
+
+
+
+
+
+  // const { city } = req.query;
+  // const citiesAll = await getAllCities(req.query.id);
+
+  // try {
+  //   if (city) {
+  //     // let cityResponse = await User.findOne({ city: name });
+  //     const cityName = citiesAll.map((c) => {
+  //      c.city.name.toLowerCase().includes(city.name.toLowerCase());
+  //     });
+  //     cityName.length
+  //       ? res.status(200).send("Todo OK, Beautiful", cityName)
+  //       : res.status(404).send("City not found");
+  //   }
+  //   res.send(cityName)
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 /* *********** Funciones ************ */
@@ -101,15 +129,20 @@ const getAllUsers = async () => {
 };
 
 const getOneId = async (id) => {
-  return await User.findById(id);
+  return await User.findOne({id:id});
 };
 
-const getAllCities = async () => {
-  return await Info.find({});
+const getAllCities = async (id) => {
+ 
+let citysMongo = await User.FindAll({city: city});
+ 
+if(!citysMongo) res.status(404).send("not found");
+  
+res.send(citysMongo)
 };
 
-const getCitiesID = async (id) => {
-  return await Info.findById(id);
-};
+// const getCitiesID = async (id) => {
+//   return await Info.findById(id);
+// };
 
 module.exports = { getUsers, getUsersId, getUsersPost, userEdit, citiesAll };
