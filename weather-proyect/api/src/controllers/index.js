@@ -36,7 +36,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUsersPost = async (req, res) => {
+const getUsersPost = async (req, res) => { //FUNCIONA!!!! login- password
   const { name, lastname, mail, password } = req.body;
 
   const findUser = await User.findOne({ mail: mail });
@@ -44,7 +44,7 @@ const getUsersPost = async (req, res) => {
     return res.send({ log: false, mensage: "Password Incorrect!" });
 
   if (findUser) {
-    let mailId = await User.findOne({ id: findUser.id });
+    let mailId = await User.findOne({ _id: findUser.id });
     res.send({
       log: true,
       mensage: "Suceffuly Login!",
@@ -82,64 +82,52 @@ const userEdit = async (req, res) => {
 const favAll = async (req, res) => {};
 
 /* *********** Citys ************ */
+
 const citiesAll = async (req, res) => {
+
+  const id= req.params.id;
+  const city = req.query.city;
+  const cityTotal = await cityAll();
+
+
+    //  let cityFilter = cityTotal.filter(filt=> filt._id === id).map(c=> c.city)
+
+
  
-//user---->id = usuario 
-const {id} = req.params;
+    //  res.send(cityFilter)
+    //  console.log(cityFilter)
 
-try{
-if(id){
-  const idUser = await User.find({_id: id})
-  console.log(idUser)
-  res.status(200).send(idUser)
-}
+let test = cityTotal.map(m=> m.city)
 
-}catch(error){
-console.log(error)
-}
+res.send(test)
+console.log(test)
 
-//usuario--->buscar city y traer su array
-
-
-
-
-
-  // const { city } = req.query;
-  // const citiesAll = await getAllCities(req.query.id);
-
-  // try {
-  //   if (city) {
-  //     // let cityResponse = await User.findOne({ city: name });
-  //     const cityName = citiesAll.map((c) => {
-  //      c.city.name.toLowerCase().includes(city.name.toLowerCase());
-  //     });
-  //     cityName.length
-  //       ? res.status(200).send("Todo OK, Beautiful", cityName)
-  //       : res.status(404).send("City not found");
-  //   }
-  //   res.send(cityName)
-  // } catch (error) {
-  //   console.log(error);
-  // }
 };
+
+
+
+
+
+
+ 
 
 /* *********** Funciones ************ */
 const getAllUsers = async () => {
   return await User.find({});
 };
 
-const getOneId = async (id) => {
-  return await User.findOne({id:id});
+const cityAll = async () => {
+  return await User.find({});
 };
 
-const getAllCities = async (id) => {
+// const getAllCities = async (id) => {
  
-let citysMongo = await User.FindAll({city: city});
+// let citysMongo = await User.FindAll({city: city});
  
-if(!citysMongo) res.status(404).send("not found");
+// if(!citysMongo) res.status(404).send("not found");
   
-res.send(citysMongo)
-};
+// res.send(citysMongo)
+// };
 
 // const getCitiesID = async (id) => {
 //   return await Info.findById(id);

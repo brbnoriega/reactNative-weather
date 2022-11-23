@@ -20,11 +20,11 @@ const userSchema = new Schema({
 
   password: { type: String, require: true },
 
-  city: [
-    {
-      name: { type: String, require: false },
-    },
-  ],
+  city: [{ type: String, require: false }],
+    
+    
+    
+  
 
   favourites: [
     {
