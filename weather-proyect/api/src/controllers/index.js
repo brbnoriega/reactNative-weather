@@ -1,21 +1,18 @@
 const User = require("../db/schemas/user.schema");
 const Info = require("../db/schemas/infoApi.schema");
 
-
-
 //f que trae los users por id 1--user 1--id
 const getUsersId = async (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
 
-  try{
-  if(id){
-    const idUser = await User.find({_id: id})
-    console.log(idUser)
-    res.status(200).send(idUser)
-  }
- 
-  }catch(error){
-  console.log(error)
+  try {
+    if (id) {
+      const idUser = await User.find({ _id: id });
+      console.log(idUser);
+      res.status(200).send(idUser);
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -29,14 +26,17 @@ const getUsers = async (req, res) => {
       u.name.toLowerCase().includes(name.toLowerCase())
     );
     console.log("entre");
-    userName.length ? res.status(200).send(userName) : res.status(404).send("User not found");
+    userName.length
+      ? res.status(200).send(userName)
+      : res.status(404).send("User not found");
     console.log("estoy al final del 404");
   } else {
     res.status(200).send(usersTotal);
   }
 };
 
-const getUsersPost = async (req, res) => { //FUNCIONA!!!! login- password
+const getUsersPost = async (req, res) => {
+  //FUNCIONA!!!! login- password
   const { name, lastname, mail, password } = req.body;
 
   const findUser = await User.findOne({ mail: mail });
@@ -84,53 +84,66 @@ const favAll = async (req, res) => {};
 /* *********** Citys ************ */
 
 const citiesAll = async (req, res) => {
-
-  const id= req.params.id;
-  const city = req.query.city;
-  const cityTotal = await cityAll();
-
-
-    //  let cityFilter = cityTotal.filter(filt=> filt._id === id).map(c=> c.city)
-
-
  
-    //  res.send(cityFilter)
-    //  console.log(cityFilter)
 
-let test = cityTotal.map(m=> m.city)
 
-res.send(test)
-console.log(test)
+  const id = req.params.id;
+  const reqCity = req.query.city;
+  const cityById = await User.find({ _id: id });
+
+  let arrayCity = cityById.map((m) => m.city); 
+
+  if (reqCity) {
+    let allCities = arrayCity.map((u) => u.filter((c) => c === reqCity)); //id de caro ingreso y aparecen sus citys
+    res.send(allCities);
+    console.log("Match user-id!", allCities);
+  } else if(arrayCity) {
+    res.send(arrayCity);
+    console.log("All citys de los users", arrayCity); // array de citys de los users
+  
+  }else if (Array.isArray(reqCity) || Array.isArray(allCity)){
+      res.status(404).send('Not Found!')
+  }
 
 };
 
+// const cityById = async (req, res) => {
 
+//   const {id} = req.params;
 
+//   try{
+//   if(id){
+//     const idUser = await User.find({_id: id})
+//     console.log(idUser)
+//  const map = idUser.map(c=> c.city)
+//  res.send(map)
+//   }
 
+//   }catch(error){
+//   console.log(error)
+//   }
 
+// //   const id= req.query.id;
 
- 
+// //   const allCitiesId = await getCitiesID(id);
+
+// // let match = allCitiesId.map(m=> m.city)
+// // res.send(match)
+// // console.log(match)
+
+// };
 
 /* *********** Funciones ************ */
 const getAllUsers = async () => {
   return await User.find({});
 };
 
-const cityAll = async () => {
-  return await User.find({});
-};
-
-// const getAllCities = async (id) => {
- 
-// let citysMongo = await User.FindAll({city: city});
- 
-// if(!citysMongo) res.status(404).send("not found");
-  
-// res.send(citysMongo)
+// const cityAll = async () => {
+//   return await User.find({});
 // };
 
 // const getCitiesID = async (id) => {
-//   return await Info.findById(id);
+//   return await User.find({id});
 // };
 
 module.exports = { getUsers, getUsersId, getUsersPost, userEdit, citiesAll };
