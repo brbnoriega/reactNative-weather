@@ -22,7 +22,7 @@ const userSchema = new Schema({
 
   city: [
     {
-      name: { type: String, trim: true, require: true },
+      name: { type: String, trim: true, require: false },
       lon: { type: Number, trim: true, require: false },
       lat: { type: Number, trim: true, require: false },
     },
@@ -30,7 +30,7 @@ const userSchema = new Schema({
 
   favourites: [
     {
-      city: { type: String, require: false },
+      name: { type: String, trim: true, require: false },
     },
   ],
   image: {
