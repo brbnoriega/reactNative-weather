@@ -79,7 +79,7 @@ const userEdit = async (req, res) => {
 };
 
 /* *********** Favoritos ************ */
-const favAll = async (req, res) => {};
+const fav = async (req, res) => {};
 
 /* *********** Citys ************ */
 
@@ -102,43 +102,37 @@ const citiesAll = async (req, res) => {
   }
 };
 
-// const cityById = async (req, res) => {
+const cityEdit = async (req, res) => {
 
-//   const {id} = req.params;
-
-//   try{
-//   if(id){
-//     const idUser = await User.find({_id: id})
-//     console.log(idUser)
-//  const map = idUser.map(c=> c.city)
-//  res.send(map)
-//   }
-
-//   }catch(error){
-//   console.log(error)
-//   }
-
-// //   const id= req.query.id;
-
-// //   const allCitiesId = await getCitiesID(id);
-
-// // let match = allCitiesId.map(m=> m.city)
-// // res.send(match)
-// // console.log(match)
-
-// };
+const {id} = req.params;
+const {cityEdit} = req.body;
+    try {
+        const cityToChange = await User.findOne({ id });
+        if (cityToChange) {
+            await User.updateOne(
+                { id },
+                {city: cityEdit },
+               );     
+                   
+            return User.findOne({ id });
+        } else {
+            return { error: "City does not exist." };
+        }
+    } catch (error) {
+       res.status(404).send('ERROR');
+    } 
+};
 
 /* *********** Funciones ************ */
 const getAllUsers = async () => {
   return await User.find({});
 };
 
-// const cityAll = async () => {
-//   return await User.find({});
-// };
-
-// const getCitiesID = async (id) => {
-//   return await User.find({id});
-// };
-
-module.exports = { getUsers, getUsersId, getUsersPost, userEdit, citiesAll };
+module.exports = {
+  getUsers,
+  getUsersId,
+  getUsersPost,
+  userEdit,
+  citiesAll,
+  cityEdit,
+};
