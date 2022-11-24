@@ -84,27 +84,22 @@ const favAll = async (req, res) => {};
 /* *********** Citys ************ */
 
 const citiesAll = async (req, res) => {
- 
-
-
   const id = req.params.id;
   const reqCity = req.query.city;
   const cityById = await User.find({ _id: id });
+  let arrayCity = cityById.map((m) => m.city);
 
-  let arrayCity = cityById.map((m) => m.city); 
-
-  if (reqCity) {
-    let allCities = arrayCity.map((u) => u.filter((c) => c === reqCity)); //id de caro ingreso y aparecen sus citys
+  let allCities = arrayCity.map((u) => u.filter((c) => c === reqCity));
+  if (reqCity && allCities[0].length > 0) {
+    //id de caro ingreso y aparecen sus citys
     res.send(allCities);
     console.log("Match user-id!", allCities);
-  } else if(arrayCity) {
+  } else if (!reqCity) {
     res.send(arrayCity);
     console.log("All citys de los users", arrayCity); // array de citys de los users
-  
-  }else if (Array.isArray(reqCity) || Array.isArray(allCity)){
-      res.status(404).send('Not Found!')
+  } else {
+    res.status(404).send("Not Found!");
   }
-
 };
 
 // const cityById = async (req, res) => {
