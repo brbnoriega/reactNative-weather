@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { getUsers, getUsersId, getUsersPost, userEdit, citiesAll, cityEdit} = require("../controllers/index");
-
+const {
+  getUsers,
+  getUsersId,
+  getUsersPost,
+  userEdit,
+  citiesAll,
+  cityEdit,
+} = require("../controllers/index");
 
 router.get("/user/:id", getUsersId); //funciona trae solo el id especificado por params
 router.get("/user", getUsers); //funciona, trae todos los usuarios
@@ -10,12 +16,11 @@ router.post("/user", getUsersPost); //funciona perfecto
 
 //Se podria unificar fav y cities
 router.get("/cities/:id", citiesAll); //funciona, trae todas las citys de todos los users
-router.put("/editCity/:id", cityEdit);
+router.put("/editCity/:id/:idCity", cityEdit);
 
 router.get("/user/fav");
 router.get("/user/fav/:id");
 router.put("/user/fav/:id");
 router.put("/user/removeFav/:id");
-
 
 module.exports = router;

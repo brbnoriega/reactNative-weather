@@ -20,11 +20,13 @@ const userSchema = new Schema({
 
   password: { type: String, require: true },
 
-  city: { type: Array, require: false },
-    
-    
-    
-  
+  city: [
+    {
+      name: { type: String, trim: true, require: true },
+      lon: { type: Number, trim: true, require: false },
+      lat: { type: Number, trim: true, require: false },
+    },
+  ],
 
   favourites: [
     {
@@ -37,7 +39,7 @@ const userSchema = new Schema({
     default: "https://www.nicepng.com/png/detail/608-6080578_png-file-svg-icono-de-persona-png.png",
   },
 
-  disabled: { type: Boolean, default: false },
+  /* disabled: { type: Boolean, default: false },*/
 });
 
 module.exports = User = mongoose.model("user", userSchema);

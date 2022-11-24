@@ -26,9 +26,7 @@ const getUsers = async (req, res) => {
       u.name.toLowerCase().includes(name.toLowerCase())
     );
     console.log("entre");
-    userName.length
-      ? res.status(200).send(userName)
-      : res.status(404).send("User not found");
+    userName.length ? res.status(200).send(userName) : res.status(404).send("User not found");
     console.log("estoy al final del 404");
   } else {
     res.status(200).send(usersTotal);
@@ -37,7 +35,7 @@ const getUsers = async (req, res) => {
 
 const getUsersPost = async (req, res) => {
   //FUNCIONA!!!! login- password
-  const { name, lastname, mail, password } = req.body;
+  const { name, lastname, nickname, isAdmin, mail, password, city, favourites, image } = req.body;
 
   const findUser = await User.findOne({ mail: mail });
   if (findUser && findUser.password !== password)
@@ -51,7 +49,17 @@ const getUsersPost = async (req, res) => {
       userInfo: [mailId, findUser],
     });
   } else {
-    let userCreated = await User.create({ name, lastname, password, mail });
+    let userCreated = await User.create({
+      name,
+      lastname,
+      nickname,
+      isAdmin,
+      password,
+      mail,
+      city,
+      favourites,
+      image,
+    });
     let matcheo = await User.findOne({ name: name });
     res.send({
       log: true,
@@ -79,7 +87,7 @@ const userEdit = async (req, res) => {
 };
 
 /* *********** Favoritos ************ */
-const fav = async (req, res) => {};
+const favAll = async (req, res) => {};
 
 /* *********** Citys ************ */
 
@@ -103,24 +111,49 @@ const citiesAll = async (req, res) => {
 };
 
 const cityEdit = async (req, res) => {
+  // const position = req.body._id;
+  // const newCity = req.body.city;
 
-const {id} = req.params;
-const {cityEdit} = req.body;
-    try {
-        const cityToChange = await User.findOne({ id });
-        if (cityToChange) {
-            await User.updateOne(
-                { id },
-                {city: cityEdit },
-               );     
-                   
-            return User.findOne({ id });
-        } else {
-            return { error: "City does not exist." };
-        }
-    } catch (error) {
-       res.status(404).send('ERROR');
-    } 
+  // User.findById(position)
+  //   .then((model) => {
+  //     return Object.assign(model, { city: newCity });
+  //   })
+  //   .then((model) => {
+  //     return model.save();
+  //   })
+  //   .then((updatedModel) => {
+  //     res.json({
+  //       msg: "model updated",
+  //       updatedModel,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     res.send(err);
+  //   });
+
+  // var query = { city: req.city };
+  // req.newData.city = req.city;
+
+  // User.findOneAndUpdate(query, req.newData, { upsert: true }, function (err, doc) {
+  //   if (err) return res.send(500, { error: err });
+  //   return res.send("Succesfully saved.");
+  // });
+
+  const { id, idCity } = req.params;
+  const { cityEdit } = req.body;
+  try {
+    const cityToChange = await User.findOne({ id });
+    const cityName = cityToChange.city.name;
+    if (cityToChange) {
+      await User.updateOne({ idCity }, { cityName: cityEdit });
+
+      return User.findOne({ id });
+    } else {
+      return { error: "City does not exist." };
+    }
+  } catch (error) {
+    res.status(404).send("ERROR");
+  }
 };
 
 /* *********** Funciones ************ */
