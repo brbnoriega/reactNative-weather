@@ -136,51 +136,28 @@ const favAdd = async (req, res) => {
 
 const citiesAll = async (req, res) => {
   const id = req.params.id;
-  const reqCity = req.query.city;
-  const cityById = await User.find({ _id: id });
-  let arrayCity = cityById.map((m) => m.city);
+  const cityById = await User.findOne({ _id: id });
 
-  let allCities = arrayCity.map((u) => u.filter((c) => c === reqCity));
-  if (reqCity && allCities[0].length > 0) {
-    //id de caro ingreso y aparecen sus citys
-    res.send(allCities);
-    console.log("Match user-id!", allCities);
-  } else if (!reqCity) {
-    res.send(arrayCity);
-    console.log("All citys de los users", arrayCity); // array de citys de los users
-  } else {
-    res.status(404).send("Not Found!");
-  }
+  cityById
+    ? res.status(200).send({ success: cityById.city })
+    : res.status(400).send({ error: "City not found" });
 };
 
 const cityEdit = async (req, res) => {
-  // const position = req.body._id;
-  // const newCity = req.body.city;
-
-  // User.findById(position)
-  //   .then((model) => {
-  //     return Object.assign(model, { city: newCity });
-  //   })
-  //   .then((model) => {
-  //     return model.save();
-  //   })
-  //   .then((updatedModel) => {
-  //     res.json({
-  //       msg: "model updated",
-  //       updatedModel,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     res.send(err);
-  //   });
-
-  // var query = { city: req.city };
-  // req.newData.city = req.city;
-
-  // User.findOneAndUpdate(query, req.newData, { upsert: true }, function (err, doc) {
-  //   if (err) return res.send(500, { error: err });
-  //   return res.send("Succesfully saved.");
-  // });
+  const id = req.params.id;
+  const name = req.body;
+  try {
+    User.updateOne({ _id: id }, { $push: { city: name } }, function (error, success) {
+      if (error) {
+        res.status(404).send("ERROR", error);
+      }
+      if (success) {
+        res.status(200).send("TODO OK");
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 
   try {
     const { id, idCity } = req.params;

@@ -19,7 +19,7 @@ router.post("/user", getUsersPost); //funciona perfecto
 
 //Se podria unificar fav y cities
 router.get("/cities/:id", citiesAll); //funciona, trae todas las citys de todos los users
-router.put("/editCity/:id/:idCity", cityEdit);
+router.put("/editCity/:id", cityEdit);
 
 router.get("/fav/:id", favAll); //funciona, trae todos los favoritos!
 router.put("/fav/delete/:id", favDelete);

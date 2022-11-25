@@ -22,9 +22,7 @@ const userSchema = new Schema({
 
   city: [
     {
-      name: { type: String, trim: true, require: false },
-    
-      
+      name: { type: String, trim: true, require: false, unique: true },
       lon: { type: Number, trim: true, require: false },
       lat: { type: Number, trim: true, require: false },
     },
