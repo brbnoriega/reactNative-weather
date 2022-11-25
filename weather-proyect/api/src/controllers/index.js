@@ -131,11 +131,10 @@ const favAdd = async (req, res) => {
     const userFind = await User.findOne({ id });
     console.log("soy userFind", userFind);
     // const productFav = await User.findOne(city);
-    const findFav = userFind.favourites.includes({ name: name });
+    const findFav = await userFind.findOne({ name });
     console.log("soy findFav", findFav);
     if (!findFav) {
-      const userFind2 = await User.findOne({ id });
-      const userAddFavs = await userFind2.favourites.add({ name: name }); // create?
+      const userAddFavs = await userFind.add({ name });
       res.json(userAddFavs);
     } else {
       throw new Error("ya existe en favoritos");
