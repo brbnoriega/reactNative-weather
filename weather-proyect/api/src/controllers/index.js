@@ -89,36 +89,29 @@ const userEdit = async (req, res) => {
 /* *********** Favoritos ************ */
 const favAll = async (req, res) => {
   const id = req.params.id;
-  const reqCity = req.query.favourites;
-  const cityById = await User.find({ _id: id });
-  let arrayCity = cityById.map((m) => m.favourites);
+  const cityById = await User.findOne({ _id: id });
 
-  let allCities = arrayCity.map((u) => u.filter((c) => c === reqCity));
-  if (reqCity && allCities[0].length > 0) {
-    //id de caro ingreso y aparecen sus citys
-    res.send(allCities);
-    console.log("Match user-id!", allCities);
-  } else if (!reqCity) {
-    res.send(arrayCity);
-    console.log("All citys de los users", arrayCity); // array de citys de los users
+  if (cityById) {
+    res.status(200).send({ success: cityById.favourites });
   } else {
-    res.status(404).send("Not Found!");
+    res.status(400).send({ error: "City not found" });
   }
 };
 
 const favDelete = async (req, res) => {
   const { id } = req.params;
-  const { _id, name } = req.body;
+  const { name } = req.body;
   console.log("estoy antes del tryyyy");
-  try {
-    const userFind = await User.findOne({ _id: id });
-    // const cityFind = await User.findOne({ city: _id });
-    console.log("soy el userFInd");
-    // const userDeleteFavs = await userFind.deleteOne({ city: name });
-    const userDeleteFavs = userFind.favourites.pop({ city: name });
-    console.log("deleteeeee", userDeleteFavs);
 
-    res.json(userFind);
+  try {
+    User.updateOne({ _id: id }, { $pull: { favourites: { name } } }, function (error, success) {
+      if (error) {
+        res.status(404).send("ERROR", error);
+      }
+      if (success) {
+        res.status(200).send("TODO OK");
+      }
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -128,17 +121,14 @@ const favAdd = async (req, res) => {
   const id = req.params.id;
   const name = req.body;
   try {
-    const userFind = await User.findOne({ id });
-    console.log("soy userFind", userFind);
-    // const productFav = await User.findOne(city);
-    const findFav = await userFind.findOne({ name });
-    console.log("soy findFav", findFav);
-    if (!findFav) {
-      const userAddFavs = await userFind.add({ name });
-      res.json(userAddFavs);
-    } else {
-      throw new Error("ya existe en favoritos");
-    }
+    User.updateOne({ _id: id }, { $push: { favourites: name } }, function (error, success) {
+      if (error) {
+        res.status(404).send("ERROR", error);
+      }
+      if (success) {
+        res.status(200).send("TODO OK");
+      }
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
