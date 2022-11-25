@@ -26,7 +26,9 @@ const getUsers = async (req, res) => {
       u.name.toLowerCase().includes(name.toLowerCase())
     );
     console.log("entre");
-    userName.length ? res.status(200).send(userName) : res.status(404).send("User not found");
+    userName.length
+      ? res.status(200).send(userName)
+      : res.status(404).send("User not found");
     console.log("estoy al final del 404");
   } else {
     res.status(200).send(usersTotal);
@@ -35,7 +37,17 @@ const getUsers = async (req, res) => {
 
 const getUsersPost = async (req, res) => {
   //FUNCIONA!!!! login- password
-  const { name, lastname, nickname, isAdmin, mail, password, city, favourites, image } = req.body;
+  const {
+    name,
+    lastname,
+    nickname,
+    isAdmin,
+    mail,
+    password,
+    city,
+    favourites,
+    image,
+  } = req.body;
 
   const findUser = await User.findOne({ mail: mail });
   if (findUser && findUser.password !== password)
@@ -126,18 +138,17 @@ const favDelete = async (req, res) => {
 const favAdd = async (req, res) => {
   const id = req.params.id;
   const name = req.body;
-  try {
-    const userFind = await User.findOne({ id });
-    console.log("soy userFind", userFind);
-    // const productFav = await User.findOne(city);
-    const findFav = await userFind.findOne({ name });
-    console.log("soy findFav", findFav);
-    if (!findFav) {
-      const userAddFavs = await userFind.add({ name });
-      res.json(userAddFavs);
-    } else {
-      throw new Error("ya existe en favoritos");
+  const userFind = await User.findOne({ id });
+
+    if (userFind) {
+      const keep = userFind.city;
+      keep.push(name)
+      console.log(keep)
     }
+ try {
+    const findFav = await User.updateOne({ name });
+    console.log("soy findFav", findFav);
+    return keep;
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
