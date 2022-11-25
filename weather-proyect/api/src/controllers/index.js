@@ -89,9 +89,9 @@ const userEdit = async (req, res) => {
 /* *********** Favoritos ************ */
 const favAll = async (req, res) => {
   const id = req.params.id;
-  const reqCity = req.query.city;
+  const reqCity = req.query.favourites;
   const cityById = await User.find({ _id: id });
-  let arrayCity = cityById.map((m) => m.city);
+  let arrayCity = cityById.map((m) => m.favourites);
 
   let allCities = arrayCity.map((u) => u.filter((c) => c === reqCity));
   if (reqCity && allCities[0].length > 0) {
@@ -114,10 +114,11 @@ const favDelete = async (req, res) => {
     const userFind = await User.findOne({ _id: id });
     // const cityFind = await User.findOne({ city: _id });
     console.log("soy el userFInd");
-    const userDeleteFavs = await userFind.deleteOne({ city: name });
+    // const userDeleteFavs = await userFind.deleteOne({ city: name });
+    const userDeleteFavs = userFind.favourites.pop({ city: name });
     console.log("deleteeeee", userDeleteFavs);
 
-    res.json(userDeleteFavs);
+    res.json(userFind);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -130,10 +131,11 @@ const favAdd = async (req, res) => {
     const userFind = await User.findOne({ id });
     console.log("soy userFind", userFind);
     // const productFav = await User.findOne(city);
-    const findFav = await userFind.findOne({ name });
+    const findFav = userFind.favourites.includes({ name: name });
     console.log("soy findFav", findFav);
     if (!findFav) {
-      const userAddFavs = await userFind.add({ name });
+      const userFind2 = await User.findOne({ id });
+      const userAddFavs = await userFind2.favourites.add({ name: name }); // create?
       res.json(userAddFavs);
     } else {
       throw new Error("ya existe en favoritos");
