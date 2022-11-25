@@ -91,11 +91,9 @@ const favAll = async (req, res) => {
   const id = req.params.id;
   const cityById = await User.findOne({ _id: id });
 
-  if (cityById) {
-    res.status(200).send({ success: cityById.favourites });
-  } else {
-    res.status(400).send({ error: "City not found" });
-  }
+  cityById
+    ? res.status(200).send({ success: cityById.favourites })
+    : res.status(400).send({ error: "City not found" });
 };
 
 const favDelete = async (req, res) => {
