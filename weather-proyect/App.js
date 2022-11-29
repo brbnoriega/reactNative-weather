@@ -1,62 +1,32 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import ButtonGradient from "./components/ButtonGradient";
-import { LinearGradient } from "expo-linear-gradient";
+import { NativeRouter,  Switch, Route } from "react-native";
+import {Landing} from "./client/components/Landing/Landing";
+import Home from "./client/components/Home/Home";
+import Login from "./client/components/Login/Login";
+import {Profile} from "./client/components/Profile/Profile";
+import {EditProfile} from "./client/components/EditProfile/EditProfile";
+import {Detail} from "./client/components/Detail/Detail";
+import {ButtonGradient} from "./client/components/ButtonGradient/ButtonGradient";
+import { render } from "react-dom";
 
-export default function App() {
+function App() {
+  
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.container}>
-        <Text style={styles.titulo}>Hello</Text>
-        <Text style={styles.subTitle}>Sign In to your account</Text>
-        <TextInput placeholder="weather@gmail.com" style={styles.textInput}></TextInput>
-        <TextInput
-          placeholder="password"
-          style={styles.textInput}
-          secureTextEntry={true}
-        ></TextInput>
-        <Text style={styles.forgotPassword}>Forgot your password?</Text>
-        <ButtonGradient style={styles.button} />
-        <Text style={styles.forgotPassword}>Dont have an account?</Text>
-        <StatusBar style="auto" /> {/*modo white o dark */}
-      </View>
-    </View>
+    //conocimiento del store le doy visibilidad a los componentes internos
+    <NativeRouter>
+      <Switch>
+  
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/login" component={Login} />
+
+       
+      </Switch>
+    </NativeRouter>
+
+ 
+     
+  
   );
 }
 
-const styles = StyleSheet.create({
-  //clases para estilos de los componentes viene por default
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "#f1f1f1",
-  },
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  titulo: {
-    fontSize: 80,
-    color: "#34434D",
-    fontWeight: "bold",
-  },
-  subTitle: {
-    fontSize: 20,
-    color: "gray",
-  },
-  textInput: {
-    padding: 10,
-    paddingStart: 30,
-    width: "80%",
-    height: 50,
-    marginTop: 20,
-    borderRadius: 30,
-    backgroundColor: "#fff",
-  },
-  forgotPassword: {
-    padding: 14,
-    color: "gray",
-    marginTop: 20,
-  },
-  button: {},
-});
+export default App;
