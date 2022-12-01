@@ -1,24 +1,23 @@
 import React from "react";
 import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const HomeScreen = ({navigation}) => {
+const Detail = ({navigation}) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text
         style={{
           fontSize: 30,
           textAlign: "center",
-
+          
         }}
       >
-        HomeScreen
+        Detail
       </Text>
-      <Button
-        title="Go to Detail!"
-        onPress={() => navigation.navigate('Detail')}
-      />
+
+      <Button title="Go to Home" onPress={() => navigation.navigate("HomeScreen")} />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );
 };
 
-export default HomeScreen;
+export default Detail;
