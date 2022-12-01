@@ -4,6 +4,9 @@ import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 const HomeScreen = ({navigation}) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      
+  
+      
       <Text
         style={{
           fontSize: 30,
